@@ -141,3 +141,38 @@ export interface RouteStep {
   documents: LocalizedText[]
   links: RouteLink[]
 }
+
+export interface Consultant {
+  id: string
+  name: string
+  city: City
+  story: LocalizedText
+  experience: LocalizedText
+  topics: LocalizedText[]
+}
+
+export interface Community {
+  id: string
+  title: LocalizedText
+  description: LocalizedText
+  /** Демо-значение */
+  membersCount: number
+}
+
+export interface CommunityPost {
+  id: string
+  communityId: string
+  authorName: string
+  text: LocalizedText
+  /** ISO-дата */
+  date: string
+}
+
+export interface ChatMessage {
+  id: string
+  consultantId: string
+  from: 'me' | 'consultant'
+  text: string
+  /** ISO-дата и время */
+  date: string
+}

@@ -10,6 +10,8 @@ import SupportDocumentsPage from './pages/SupportDocumentsPage'
 import SupportBenefitsPage from './pages/SupportBenefitsPage'
 import SupportRoutePage from './pages/SupportRoutePage'
 import CommunityPage from './pages/CommunityPage'
+import CommunityGroupPage from './pages/CommunityGroupPage'
+import ChatPage from './pages/ChatPage'
 import ChildPage from './pages/ChildPage'
 import SpecialistNewPage from './pages/SpecialistNewPage'
 import AdminModerationPage from './pages/AdminModerationPage'
@@ -29,6 +31,8 @@ export default function App() {
         <Route path="/support/benefits" element={<SupportBenefitsPage />} />
         <Route path="/support/route" element={<SupportRoutePage />} />
         <Route path="/community" element={<CommunityPage />} />
+        <Route path="/community/groups/:groupId" element={<CommunityGroupPage />} />
+        <Route path="/community/chat/:consultantId" element={<ChatPage />} />
         <Route path="/child" element={<ChildPage />} />
         <Route path="/specialist/new" element={<SpecialistNewPage />} />
         <Route path="/admin/moderation" element={<AdminModerationPage />} />

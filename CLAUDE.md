@@ -54,6 +54,7 @@ React + TypeScript + Vite, React Router, react-i18next, TanStack Query, CSS Modu
 - избранное: `listFavorites`, `toggleFavorite`
 - дети: `getChildren`, `saveChild` (бросает ошибку при переполнении хранилища), `deleteChild` (вместе с доступами и черновиком), `getChildForSpecialist`
 - поддержка: `listSupportArticles(category)`, `listRouteSteps`, `getChecklistState`/`toggleChecklistItem`, `getRouteProgress`/`toggleRouteStep`
+- сообщество (демо): `listConsultants`/`getConsultant`, `listCommunities`/`getCommunity`/`listCommunityPosts`, `listMemberships`/`toggleMembership`, `listChatMessages`/`sendChatMessage`/`receiveDemoReply`
 - черновики формы ребёнка: `getChildDraft`, `saveChildDraft`, `clearChildDraft`
 - доступы: `getAccessGrants`, `saveAccessGrant` (пустой список разделов = отзыв), `revokeAccessGrant`
 
@@ -61,17 +62,19 @@ React + TypeScript + Vite, React Router, react-i18next, TanStack Query, CSS Modu
 
 Моки (`src/mocks`) — начальное значение, пока в localStorage ничего нет. Изменяемые данные хранятся в localStorage, префикс `mamaProPix:`; ключи определены в `src/api/storage.ts`:
 
-| Ключ                           | Содержимое                                                                       |
-| ------------------------------ | -------------------------------------------------------------------------------- |
-| `mamaProPix:specialists`       | `Specialist[]`                                                                   |
-| `mamaProPix:reviews`           | `Review[]`                                                                       |
-| `mamaProPix:favorites`         | `string[]` (id специалистов)                                                     |
-| `mamaProPix:children`          | `Child[]`                                                                        |
-| `mamaProPix:accessGrants`      | `AccessGrant[]`                                                                  |
-| `mamaProPix:childDrafts`       | `Record<string, ChildDraft>` (текстовые поля формы; ключ — id ребёнка или `new`) |
-| `mamaProPix:supportChecklists` | `Record<articleId, string[]>` — отмеченные документы статей                      |
-| `mamaProPix:routeProgress`     | `string[]` — выполненные этапы маршрута                                          |
-| `lang`                         | язык интерфейса (`ru` / `kk`), i18n                                              |
+| Ключ                              | Содержимое                                                                       |
+| --------------------------------- | -------------------------------------------------------------------------------- |
+| `mamaProPix:specialists`          | `Specialist[]`                                                                   |
+| `mamaProPix:reviews`              | `Review[]`                                                                       |
+| `mamaProPix:favorites`            | `string[]` (id специалистов)                                                     |
+| `mamaProPix:children`             | `Child[]`                                                                        |
+| `mamaProPix:accessGrants`         | `AccessGrant[]`                                                                  |
+| `mamaProPix:childDrafts`          | `Record<string, ChildDraft>` (текстовые поля формы; ключ — id ребёнка или `new`) |
+| `mamaProPix:supportChecklists`    | `Record<articleId, string[]>` — отмеченные документы статей                      |
+| `mamaProPix:routeProgress`        | `string[]` — выполненные этапы маршрута                                          |
+| `mamaProPix:communityMemberships` | `string[]` — сообщества, в которые вступил пользователь                          |
+| `mamaProPix:chatMessages`         | `Record<consultantId, ChatMessage[]>` — демо-переписка                           |
+| `lang`                            | язык интерфейса (`ru` / `kk`), i18n                                              |
 
 ## Страница /specialists
 
@@ -110,6 +113,13 @@ React + TypeScript + Vite, React Router, react-i18next, TanStack Query, CSS Modu
 - Контент — двуязычные моки в `src/mocks/support/` (`articles.ts`, `route.ts`); читается только через `src/api/support.ts` и хуки `features/support/hooks.ts`.
 - Весь контент — **демо**: в начале каждой статьи, списка и маршрута показывается пометка «Демо-контент, информацию нужно проверить в профильных организациях перед публикацией». Перед публикацией содержимое нужно проверить и заменить.
 
+## Сообщество (/community) — ДЕМО
+
+- Вкладки через query `?tab=groups` (по умолчанию «Равные консультанты»). Все профили, сообщения и числа участников выдуманные (`src/mocks/community.ts`); на страницах есть пометки «Демо-режим».
+- Чат (`/community/chat/:consultantId`): сообщения пользователя хранятся в localStorage, ответ консультанта — заготовленная реплика через `apiConfig.replyDelayMs` (1,5 с), без реального времени. Баннер «Демо-режим: это не реальный собеседник» обязателен.
+- Блок безопасности (`SafetyNotice`) и правила сообщества (`CommunityRules`) показываются на страницах сообщества и чата. Контакт экстренной помощи — `src/config/emergency.ts`.
+- Не публиковать выдуманные номера служб: пока `emergencyContact.value` пуст, показывается только общий текст.
+
 ## Страницы и маршруты
 
 | Маршрут              | Страница                     |
@@ -132,6 +142,16 @@ React + TypeScript + Vite, React Router, react-i18next, TanStack Query, CSS Modu
 
 Данные о ребёнке считаются чувствительными: по умолчанию скрыты, доступ выдаётся специалисту явно, по разделам.
 
+## TODO для бэкенда и релиза
+
+- [ ] Подставить реальные проверенные контакты экстренной помощи в `src/config/emergency.ts`.
+- [ ] Реальный чат с консультантами в реальном времени (WebSocket/SSE), вместо `receiveDemoReply`.
+- [ ] Модерация чата и сообщества: жалобы, блокировки, фильтрация персональных данных и данных детей, роли модераторов.
+- [ ] Верификация консультантов и согласие на публикацию профилей.
+- [ ] Модерация отзывов и рейтингов; пересчёт `ratingAvg`/`reviewsCount` на сервере.
+- [ ] Замена localStorage на HTTP-реализацию `src/api`, серверное хранение документов ребёнка и контроль доступа (`AccessGrant`) на сервере.
+- [ ] Проверить демо-контент раздела «Поддержка» в профильных организациях.
+
 ## Процесс
 
 После каждого этапа запускать `npm run build` и `npm run lint`, исправлять ошибки, обновлять этот файл при изменении соглашений.
@@ -145,6 +165,6 @@ React + TypeScript + Vite, React Router, react-i18next, TanStack Query, CSS Modu
 - [x] Избранное и сравнение
 - [x] Профиль ребёнка
 - [x] Поддержка
-- [ ] Сообщество
+- [x] Сообщество (демо)
 - [ ] Регистрация и модерация специалистов
 - [ ] Полировка

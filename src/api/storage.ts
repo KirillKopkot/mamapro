@@ -10,9 +10,14 @@ export const storageKeys = {
   childDrafts: `${STORAGE_PREFIX}childDrafts`,
   supportChecklists: `${STORAGE_PREFIX}supportChecklists`,
   routeProgress: `${STORAGE_PREFIX}routeProgress`,
+  communityMemberships: `${STORAGE_PREFIX}communityMemberships`,
+  chatMessages: `${STORAGE_PREFIX}chatMessages`,
 } as const
 
-export const apiConfig = { delayMs: 200 }
+export const apiConfig = {
+  delayMs: 200,
+  /** задержка демо-ответа консультанта */ replyDelayMs: 1500,
+}
 
 export function delay(): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, apiConfig.delayMs))
