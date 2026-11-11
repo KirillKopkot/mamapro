@@ -1,0 +1,149 @@
+.stack {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.demo {
+  margin: 0;
+  padding: var(--space-2) var(--space-3);
+  border-left: 4px solid #b7791f;
+  border-radius: var(--radius-sm);
+  background: #fdf3df;
+}
+
+.list {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.card {
+  display: grid;
+  gap: var(--space-2);
+  justify-items: start;
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.card p {
+  margin: 0;
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: var(--font-size-lg);
+}
+
+.details {
+  display: grid;
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.bilingual {
+  padding: var(--space-3);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.bilingual h4 {
+  margin: 0 0 var(--space-2);
+}
+
+.bilingual dl {
+  margin: 0 0 var(--space-2);
+}
+
+.bilingual dt {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.bilingual dd {
+  margin: 0;
+}
+
+.muted {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.error {
+  color: #b42318;
+  font-size: var(--font-size-sm);
+}
+
+.rejectForm {
+  display: grid;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-3);
+  border: 1px solid #b42318;
+  border-radius: var(--radius-sm);
+}
+
+.rejectForm p {
+  margin: 0;
+}
+
+.field {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.field textarea {
+  width: 100%;
+  padding: var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font: inherit;
+}
+
+.field [aria-invalid='true'] {
+  border-color: #b42318;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.primary,
+.secondary,
+.danger {
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  cursor: pointer;
+}
+
+.primary {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: var(--color-primary-contrast);
+}
+
+.danger {
+  border-color: #b42318;
+  color: #b42318;
+}
+
+.primary:disabled,
+.danger:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (min-width: 1024px) {
+  .stack {
+    max-width: 860px;
+  }
+}

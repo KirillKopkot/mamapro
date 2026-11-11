@@ -55,6 +55,7 @@ React + TypeScript + Vite, React Router, react-i18next, TanStack Query, CSS Modu
 - дети: `getChildren`, `saveChild` (бросает ошибку при переполнении хранилища), `deleteChild` (вместе с доступами и черновиком), `getChildForSpecialist`
 - поддержка: `listSupportArticles(category)`, `listRouteSteps`, `getChecklistState`/`toggleChecklistItem`, `getRouteProgress`/`toggleRouteStep`
 - сообщество (демо): `listConsultants`/`getConsultant`, `listCommunities`/`getCommunity`/`listCommunityPosts`, `listMemberships`/`toggleMembership`, `listChatMessages`/`sendChatMessage`/`receiveDemoReply`
+- модерация: `listPendingSpecialists`/`moderateSpecialist`, `listPendingReviews`/`moderateReview` (пересчитывает `ratingAvg` и `reviewsCount` по одобренным отзывам); черновик формы специалиста: `getSpecialistDraft`/`saveSpecialistDraft`/`clearSpecialistDraft`
 - черновики формы ребёнка: `getChildDraft`, `saveChildDraft`, `clearChildDraft`
 - доступы: `getAccessGrants`, `saveAccessGrant` (пустой список разделов = отзыв), `revokeAccessGrant`
 
@@ -74,6 +75,7 @@ React + TypeScript + Vite, React Router, react-i18next, TanStack Query, CSS Modu
 | `mamaProPix:routeProgress`        | `string[]` — выполненные этапы маршрута                                          |
 | `mamaProPix:communityMemberships` | `string[]` — сообщества, в которые вступил пользователь                          |
 | `mamaProPix:chatMessages`         | `Record<consultantId, ChatMessage[]>` — демо-переписка                           |
+| `mamaProPix:specialistDraft`      | `SpecialistFormValues` — черновик формы специалиста                              |
 | `lang`                            | язык интерфейса (`ru` / `kk`), i18n                                              |
 
 ## Страница /specialists
@@ -120,6 +122,13 @@ React + TypeScript + Vite, React Router, react-i18next, TanStack Query, CSS Modu
 - Блок безопасности (`SafetyNotice`) и правила сообщества (`CommunityRules`) показываются на страницах сообщества и чата. Контакт экстренной помощи — `src/config/emergency.ts`.
 - Не публиковать выдуманные номера служб: пока `emergencyContact.value` пуст, показывается только общий текст.
 
+## Регистрация и модерация специалистов
+
+- `/specialist/new` (`features/specialistForm/`): мастер из 6 шагов (основное, локация, о себе и видео, образование, кейсы, соцсети) + экран предпросмотра; на каждом шаге один экран, сверху прогресс. Валидация шагов и преобразование в данные — чистые функции в `validation.ts` (с тестами). Для онлайн-специалиста город и адрес необязательны; если адрес начали заполнять — нужны оба языка. Черновик автосохраняется. Подсказка «видео не длиннее 3 минут» — на шаге «О себе и видео». Фото кейсов задаются ссылками (http/https).
+- После отправки профиль создаётся со статусом `pending`, в публичные списки не попадает (`listSpecialists` отдаёт только `approved`; покрыто тестом, `src/api/moderation.test.ts`).
+- `/admin/moderation` (`features/moderation/`): списки профилей и отзывов со статусом `pending`, полный просмотр (включая тексты на обоих языках), «Одобрить» / «Отклонить». Причина отклонения обязательна на ru и kk (`validation.ts`) и хранится в `rejectionReason`.
+- **Доступ к `/admin/moderation` сейчас НЕ защищён** (на странице стоит демо-баннер). Любой пользователь может открыть страницу и модерировать. Это TODO для бэкенда: настоящая авторизация и роли (см. список TODO).
+
 ## Страницы и маршруты
 
 | Маршрут              | Страница                     |
@@ -144,6 +153,9 @@ React + TypeScript + Vite, React Router, react-i18next, TanStack Query, CSS Modu
 
 ## TODO для бэкенда и релиза
 
+- [ ] **Защитить `/admin/moderation`**: авторизация и роли (модератор/администратор), серверная проверка прав на модерацию. Сейчас страница открыта всем.
+- [ ] Серверная валидация формы специалиста, загрузка фото кейсов (сейчас — ссылки), верификация документов специалиста, проверка длительности видео (≤ 3 минут).
+- [ ] Уведомлять специалиста о результате модерации (одобрено/отклонено с причиной).
 - [ ] Подставить реальные проверенные контакты экстренной помощи в `src/config/emergency.ts`.
 - [ ] Реальный чат с консультантами в реальном времени (WebSocket/SSE), вместо `receiveDemoReply`.
 - [ ] Модерация чата и сообщества: жалобы, блокировки, фильтрация персональных данных и данных детей, роли модераторов.
@@ -166,5 +178,5 @@ React + TypeScript + Vite, React Router, react-i18next, TanStack Query, CSS Modu
 - [x] Профиль ребёнка
 - [x] Поддержка
 - [x] Сообщество (демо)
-- [ ] Регистрация и модерация специалистов
+- [x] Регистрация и модерация специалистов
 - [ ] Полировка

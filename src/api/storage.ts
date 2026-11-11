@@ -12,6 +12,7 @@ export const storageKeys = {
   routeProgress: `${STORAGE_PREFIX}routeProgress`,
   communityMemberships: `${STORAGE_PREFIX}communityMemberships`,
   chatMessages: `${STORAGE_PREFIX}chatMessages`,
+  specialistDraft: `${STORAGE_PREFIX}specialistDraft`,
 } as const
 
 export const apiConfig = {

@@ -1,5 +1,7 @@
 export * from './specialists'
 export * from './reviews'
+export * from './reviewModeration'
+export * from './specialistDraft'
 export * from './favorites'
 export * from './children'
 export * from './access'

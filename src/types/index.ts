@@ -67,6 +67,7 @@ export interface Review {
   /** ISO-дата */
   date: string
   status: ModerationStatus
+  rejectionReason?: LocalizedText
 }
 
 export interface ChildDocument {
@@ -175,4 +176,44 @@ export interface ChatMessage {
   text: string
   /** ISO-дата и время */
   date: string
+}
+
+/** Значения формы создания профиля специалиста (всё в виде строк для полей ввода). */
+export interface SpecialistFormValues {
+  firstName: string
+  lastName: string
+  specializationRu: string
+  specializationKk: string
+  experienceYears: string
+  price: string
+  priceFrom: boolean
+  formats: WorkFormat[]
+  city: City | ''
+  addressRu: string
+  addressKk: string
+  bioRu: string
+  bioKk: string
+  youtubeUrl: string
+  education: {
+    id: string
+    institutionRu: string
+    institutionKk: string
+    programRu: string
+    programKk: string
+    year: string
+  }[]
+  cases: {
+    id: string
+    titleRu: string
+    titleKk: string
+    descriptionRu: string
+    descriptionKk: string
+    beforeRu: string
+    beforeKk: string
+    afterRu: string
+    afterKk: string
+    beforeImage: string
+    afterImage: string
+  }[]
+  socials: { id: string; type: SocialType; url: string }[]
 }

@@ -1,5 +1,12 @@
-import { PageStub } from '../components/PageStub/PageStub'
+import { useTranslation } from 'react-i18next'
+import { SpecialistWizard } from '../features/specialistForm/SpecialistWizard'
 
 export default function SpecialistNewPage() {
-  return <PageStub titleKey="pages.specialistNew" />
+  const { t } = useTranslation()
+  return (
+    <div>
+      <h1>{t('pages.specialistNew')}</h1>
+      <SpecialistWizard />
+    </div>
+  )
 }
