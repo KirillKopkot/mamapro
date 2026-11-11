@@ -8,12 +8,13 @@
 
 ## Стек и команды
 
-React + TypeScript + Vite, React Router, react-i18next, TanStack Query, CSS Modules (без UI-библиотек), ESLint, Prettier.
+React + TypeScript + Vite, React Router, react-i18next, TanStack Query, CSS Modules (без UI-библиотек), ESLint, Prettier, Vitest.
 
 - `npm run dev` — dev-сервер
 - `npm run build` — проверка типов (`tsc -b`) и сборка
 - `npm run lint` — ESLint
 - `npm run format` — Prettier
+- `npm test` — unit-тесты (Vitest)
 
 ## Структура папок (`src/`)
 
@@ -42,6 +43,31 @@ React + TypeScript + Vite, React Router, react-i18next, TanStack Query, CSS Modu
 Компоненты не обращаются к localStorage и мокам напрямую — только через функции из `src/api` и хуки TanStack Query. Реализацию `api` позже заменим на HTTP без изменения компонентов.
 (Исключение — инфраструктура i18n, хранящая выбранный язык.)
 
+## Модель данных
+
+Типы лежат в `src/types/index.ts`: `LocalizedText`, `City`, `WorkFormat`, `ModerationStatus`, `Specialist` (с `Education`, `SpecialistCase`, `SocialLink`), `Review`, `Child` (с `ChildDocument`), `AccessGrant` (разделы `ChildSection`). Список городов с локализованными названиями — `src/config/cities.ts` (новый город: добавить в тип `City` и в список).
+
+Функции `src/api` (все асинхронные, с искусственной задержкой `apiConfig.delayMs`):
+
+- специалисты: `listSpecialists` (только approved), `getSpecialist`, `createSpecialist` (статус pending), `listPendingSpecialists`, `moderateSpecialist`
+- отзывы: `listReviews` (только approved), `addReview` (статус pending)
+- избранное: `listFavorites`, `toggleFavorite`
+- дети: `getChildren`, `saveChild`
+- доступы: `getAccessGrants`, `saveAccessGrant` (пустой список разделов = отзыв), `revokeAccessGrant`
+
+Хуки TanStack Query — в `src/features/*/hooks.ts` (specialists, reviews, favorites, child, access, moderation). Компоненты используют только их.
+
+Моки (`src/mocks`) — начальное значение, пока в localStorage ничего нет. Изменяемые данные хранятся в localStorage, префикс `mamaProPix:`; ключи определены в `src/api/storage.ts`:
+
+| Ключ                      | Содержимое                          |
+| ------------------------- | ----------------------------------- |
+| `mamaProPix:specialists`  | `Specialist[]`                      |
+| `mamaProPix:reviews`      | `Review[]`                          |
+| `mamaProPix:favorites`    | `string[]` (id специалистов)        |
+| `mamaProPix:children`     | `Child[]`                           |
+| `mamaProPix:accessGrants` | `AccessGrant[]`                     |
+| `lang`                    | язык интерфейса (`ru` / `kk`), i18n |
+
 ## Страницы и маршруты
 
 | Маршрут             | Страница                |
@@ -69,6 +95,7 @@ React + TypeScript + Vite, React Router, react-i18next, TanStack Query, CSS Modu
 ## Статус этапов
 
 - [x] Каркас
+- [x] Модель данных и слой api
 - [ ] Специалисты
 - [ ] Профиль и отзывы
 - [ ] Избранное и сравнение
