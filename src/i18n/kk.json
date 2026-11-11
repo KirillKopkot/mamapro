@@ -1,6 +1,12 @@
 {
-  "brand": { "logoAlt": "Логотип" },
-  "lang": { "switch": "Тіл", "ru": "Русский", "kk": "Қазақша" },
+  "brand": {
+    "logoAlt": "Логотип"
+  },
+  "lang": {
+    "switch": "Тіл",
+    "ru": "Русский",
+    "kk": "Қазақша"
+  },
   "nav": {
     "main": "Негізгі навигация",
     "home": "Басты бет",
@@ -22,5 +28,137 @@
     "specialistNew": "Маманды тіркеу",
     "adminModeration": "Модерация",
     "notFound": "Бет табылмады"
+  },
+  "common": {
+    "loading": "Жүктелуде…",
+    "error": "Деректерді жүктеу мүмкін болмады",
+    "retry": "Қайталау",
+    "close": "Жабу",
+    "any": "Кез келген",
+    "all": "Барлығы"
+  },
+  "price": {
+    "value": "{{price}} ₸",
+    "from": "{{price}} ₸ бастап"
+  },
+  "formats": {
+    "clinic": "Клиникада",
+    "home": "Үйде",
+    "online": "Онлайн",
+    "label": "Жұмыс форматы"
+  },
+  "specialist": {
+    "years_one": "{{count}} жыл тәжірибе",
+    "years_other": "{{count}} жыл тәжірибе",
+    "reviews_one": "{{count}} пікір",
+    "reviews_other": "{{count}} пікір",
+    "noReviews": "Пікір жоқ",
+    "ratingLabel": "Рейтинг {{rating}}"
+  },
+  "favorites": {
+    "add": "Таңдаулыларға қосу",
+    "remove": "Таңдаулылардан алып тастау",
+    "title": "Таңдаулылар",
+    "selectForCompare": "Салыстыруға таңдау",
+    "hintDifferent": "Бір мамандықтағы дәрігерлерді ғана салыстыруға болады",
+    "hintMax": "Тек екі маманды таңдауға болады",
+    "selectedCount": "Таңдалды: {{count}} / 2",
+    "compare": "Салыстыру",
+    "empty": "Таңдаулыларда әзірге ешкім жоқ",
+    "emptyHint": "Салыстыру үшін мамандарды таңдаулыларға қосыңыз",
+    "emptyLink": "Мамандарға өту"
+  },
+  "specialists": {
+    "searchPlaceholder": "Аты немесе мамандығы бойынша іздеу",
+    "searchLabel": "Іздеу",
+    "filters": "Сүзгілер",
+    "filtersTitle": "Сүзгілер",
+    "reset": "Тазарту",
+    "showResults": "Нәтижелерді көрсету",
+    "city": "Қала",
+    "specialization": "Мамандығы",
+    "priceRange": "Бағасы, ₸",
+    "priceMin": "Бастап",
+    "priceMax": "Дейін",
+    "minExperience": "Ең аз тәжірибе, жыл",
+    "minRating": "Ең төменгі рейтинг",
+    "found_one": "{{count}} маман табылды",
+    "found_other": "{{count}} маман табылды",
+    "empty": "Ештеңе табылмады",
+    "emptyHint": "Сүзгілерді өзгертіп немесе тазартып көріңіз",
+    "sort": {
+      "label": "Сұрыптау",
+      "direction": "Бағыты",
+      "asc": "Өсу бойынша",
+      "desc": "Кему бойынша",
+      "firstName": "Аты",
+      "lastName": "Тегі",
+      "specialization": "Мамандығы",
+      "experience": "Тәжірибе",
+      "price": "Бағасы",
+      "rating": "Рейтинг",
+      "reviews": "Пікірлер саны"
+    }
+  },
+  "notFound": {
+    "hint": "Бет жойылған немесе әлі тексеруден өтпеген болуы мүмкін.",
+    "toSpecialists": "Мамандар тізіміне"
+  },
+  "profile": {
+    "experience": "Тәжірибе",
+    "price": "Құны",
+    "location": "Қала және мекенжай",
+    "rating": "Рейтинг",
+    "video": "Бейне",
+    "videoTitle": "Маманның бейнесі",
+    "about": "Маман туралы",
+    "cases": "«Дейін және кейін» кейстері",
+    "before": "Дейін",
+    "after": "Кейін",
+    "beforeImageAlt": "Дейінгі сурет",
+    "afterImageAlt": "Кейінгі сурет",
+    "education": "Білімі",
+    "socials": "Сілтемелер",
+    "social": {
+      "instagram": "Instagram",
+      "facebook": "Facebook",
+      "telegram": "Telegram",
+      "youtube": "YouTube",
+      "website": "Сайт"
+    }
+  },
+  "reviews": {
+    "title": "Пікірлер",
+    "empty": "Әзірге пікір жоқ",
+    "distribution": "Бағалардың таралуы",
+    "starCount_one": "{{star}} жұлдыз: {{count}} пікір",
+    "starCount_other": "{{star}} жұлдыз: {{count}} пікір",
+    "formTitle": "Пікір қалдыру",
+    "name": "Атыңыз",
+    "rating": "Баға",
+    "text": "Пікір мәтіні",
+    "submit": "Жіберу",
+    "submitting": "Жіберілуде…",
+    "submitError": "Пікірді жіберу мүмкін болмады. Қайталап көріңіз.",
+    "success": "Пікір тексеруден кейін көрсетіледі",
+    "writeAnother": "Тағы бір пікір жазу",
+    "errors": {
+      "nameRequired": "Атыңызды көрсетіңіз",
+      "nameTooLong": "Аты {{max}} таңбадан аспауы керек",
+      "ratingRequired": "1-ден 5-ке дейін баға таңдаңыз",
+      "textTooShort": "Кемінде {{min}} таңба жазыңыз",
+      "textTooLong": "{{max}} таңбадан аспауы керек"
+    }
+  },
+  "compare": {
+    "best": "Жақсырақ",
+    "backToFavorites": "Таңдаулыларға өту",
+    "details": "Толығырақ",
+    "errors": {
+      "missing": "Салыстыруға мамандар таңдалмаған. Таңдаулылардан екі маманды таңдаңыз.",
+      "same": "Салыстыру үшін екі басқа маманды таңдау керек.",
+      "unavailable": "Мамандардың бірі қолжетімсіз немесе табылмады.",
+      "differentSpecialization": "Бір мамандықтағы дәрігерлерді ғана салыстыруға болады"
+    }
   }
 }

@@ -1,6 +1,12 @@
 {
-  "brand": { "logoAlt": "Логотип" },
-  "lang": { "switch": "Язык", "ru": "Русский", "kk": "Қазақша" },
+  "brand": {
+    "logoAlt": "Логотип"
+  },
+  "lang": {
+    "switch": "Язык",
+    "ru": "Русский",
+    "kk": "Қазақша"
+  },
   "nav": {
     "main": "Основная навигация",
     "home": "Главная",
@@ -22,5 +28,145 @@
     "specialistNew": "Регистрация специалиста",
     "adminModeration": "Модерация",
     "notFound": "Страница не найдена"
+  },
+  "common": {
+    "loading": "Загрузка…",
+    "error": "Не удалось загрузить данные",
+    "retry": "Повторить",
+    "close": "Закрыть",
+    "any": "Любой",
+    "all": "Все"
+  },
+  "price": {
+    "value": "{{price}} ₸",
+    "from": "от {{price}} ₸"
+  },
+  "formats": {
+    "clinic": "В клинике",
+    "home": "На дому",
+    "online": "Онлайн",
+    "label": "Формат работы"
+  },
+  "specialist": {
+    "years_one": "{{count}} год опыта",
+    "years_few": "{{count}} года опыта",
+    "years_many": "{{count}} лет опыта",
+    "years_other": "{{count}} года опыта",
+    "reviews_one": "{{count}} отзыв",
+    "reviews_few": "{{count}} отзыва",
+    "reviews_many": "{{count}} отзывов",
+    "reviews_other": "{{count}} отзыва",
+    "noReviews": "Нет отзывов",
+    "ratingLabel": "Рейтинг {{rating}}"
+  },
+  "favorites": {
+    "add": "Добавить в избранное",
+    "remove": "Убрать из избранного",
+    "title": "Избранное",
+    "selectForCompare": "Выбрать для сравнения",
+    "hintDifferent": "Сравнивать можно врачей одной специальности",
+    "hintMax": "Можно выбрать только двух специалистов",
+    "selectedCount": "Выбрано: {{count}} из 2",
+    "compare": "Сравнить",
+    "empty": "В избранном пока никого нет",
+    "emptyHint": "Добавляйте специалистов в избранное, чтобы сравнивать их",
+    "emptyLink": "Перейти к специалистам"
+  },
+  "specialists": {
+    "searchPlaceholder": "Поиск по имени или специализации",
+    "searchLabel": "Поиск",
+    "filters": "Фильтры",
+    "filtersTitle": "Фильтры",
+    "reset": "Сбросить",
+    "showResults": "Показать результаты",
+    "city": "Город",
+    "specialization": "Специализация",
+    "priceRange": "Цена, ₸",
+    "priceMin": "От",
+    "priceMax": "До",
+    "minExperience": "Минимальный стаж, лет",
+    "minRating": "Минимальный рейтинг",
+    "found_one": "Найден {{count}} специалист",
+    "found_few": "Найдено {{count}} специалиста",
+    "found_many": "Найдено {{count}} специалистов",
+    "found_other": "Найдено {{count}} специалиста",
+    "empty": "Ничего не найдено",
+    "emptyHint": "Попробуйте изменить или сбросить фильтры",
+    "sort": {
+      "label": "Сортировка",
+      "direction": "Направление",
+      "asc": "По возрастанию",
+      "desc": "По убыванию",
+      "firstName": "Имя",
+      "lastName": "Фамилия",
+      "specialization": "Специализация",
+      "experience": "Стаж",
+      "price": "Цена",
+      "rating": "Рейтинг",
+      "reviews": "Количество отзывов"
+    }
+  },
+  "notFound": {
+    "hint": "Возможно, страница была удалена или ещё не прошла проверку.",
+    "toSpecialists": "К списку специалистов"
+  },
+  "profile": {
+    "experience": "Стаж",
+    "price": "Стоимость",
+    "location": "Город и адрес",
+    "rating": "Рейтинг",
+    "video": "Видео",
+    "videoTitle": "Видео специалиста",
+    "about": "О специалисте",
+    "cases": "Кейсы «до и после»",
+    "before": "До",
+    "after": "После",
+    "beforeImageAlt": "Фото до",
+    "afterImageAlt": "Фото после",
+    "education": "Образование",
+    "socials": "Ссылки",
+    "social": {
+      "instagram": "Instagram",
+      "facebook": "Facebook",
+      "telegram": "Telegram",
+      "youtube": "YouTube",
+      "website": "Сайт"
+    }
+  },
+  "reviews": {
+    "title": "Отзывы",
+    "empty": "Пока нет отзывов",
+    "distribution": "Распределение оценок",
+    "starCount_one": "{{star}} звезда: {{count}} отзыв",
+    "starCount_few": "{{star}} звезды: {{count}} отзыва",
+    "starCount_many": "{{star}} звёзд: {{count}} отзывов",
+    "starCount_other": "{{star}} звезды: {{count}} отзыва",
+    "formTitle": "Оставить отзыв",
+    "name": "Ваше имя",
+    "rating": "Оценка",
+    "text": "Текст отзыва",
+    "submit": "Отправить",
+    "submitting": "Отправка…",
+    "submitError": "Не удалось отправить отзыв. Попробуйте ещё раз.",
+    "success": "Отзыв появится после проверки",
+    "writeAnother": "Написать ещё один отзыв",
+    "errors": {
+      "nameRequired": "Укажите имя",
+      "nameTooLong": "Имя не длиннее {{max}} символов",
+      "ratingRequired": "Выберите оценку от 1 до 5",
+      "textTooShort": "Напишите не менее {{min}} символов",
+      "textTooLong": "Не более {{max}} символов"
+    }
+  },
+  "compare": {
+    "best": "Лучше",
+    "backToFavorites": "Перейти в избранное",
+    "details": "Подробнее",
+    "errors": {
+      "missing": "Не выбраны специалисты для сравнения. Выберите двух специалистов в избранном.",
+      "same": "Для сравнения нужно выбрать двух разных специалистов.",
+      "unavailable": "Один из специалистов недоступен или не найден.",
+      "differentSpecialization": "Сравнивать можно врачей одной специальности"
+    }
   }
 }

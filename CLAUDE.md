@@ -68,6 +68,28 @@ React + TypeScript + Vite, React Router, react-i18next, TanStack Query, CSS Modu
 | `mamaProPix:accessGrants` | `AccessGrant[]`                     |
 | `lang`                    | язык интерфейса (`ru` / `kk`), i18n |
 
+## Страница /specialists
+
+- Компоненты в `src/features/specialists/`: `SpecialistCard`, `SortBar`, `FiltersPanel` (на мобильных — нижняя панель по кнопке «Фильтры», от 768px — боковая колонка); `FavoriteButton` — в `src/features/favorites/`.
+- Фильтры и сортировка хранятся в URL query-параметрах (`q`, `city`, `spec`, `formats`, `priceMin`, `priceMax`, `exp`, `rating`, `sort`, `dir`); значения по умолчанию в URL не пишутся. Разбор/сборка параметров, фильтрация и сортировка — чистые функции в `filtering.ts` (с тестами).
+- Специализация в фильтре идентифицируется русским названием (`specialization.ru`); список опций строится из данных.
+- Онлайн-специалист без города попадает в выдачу при фильтре по любому городу.
+- Склонения («N лет опыта», «N отзывов») — через plural-ключи i18next (`_one/_few/_many/_other`, для kk `_one/_other`); хук `useLang()` из `src/i18n/useLang.ts` даёт текущий язык для выбора `LocalizedText`.
+
+## Страница /specialists/:id
+
+- Секции профиля — в `src/features/specialists/profile/` (`ProfileHeader`, `VideoSection`, `AboutSection`, `CasesSection`, `EducationSection`, `SocialsSection`, обёртка `Section`); секции без данных возвращают `null`. Отзывы — `src/features/reviews/` (`ReviewsSection`, `ReviewForm`).
+- Парсинг видео — `parseYoutubeId`/`getYoutubeEmbedUrl` в `features/specialists/youtube.ts` (iframe на youtube-nocookie.com, `loading="lazy"`). Невалидная ссылка — секция скрыта. В форме регистрации специалиста (позже) нужна подсказка: видео не длиннее 3 минут.
+- Статистика рейтинга (`reviews/stats.ts`) и валидация отзыва (`reviews/validation.ts`) — чистые функции с тестами. Рейтинг в секции отзывов считается по одобренным отзывам.
+- 404 (`NotFoundPage`) показывается для несуществующего id и для специалистов не в статусе approved (проверка в странице, `getSpecialist` статус не фильтрует).
+- Отзыв сохраняется со статусом pending, после отправки — сообщение «Отзыв появится после проверки».
+
+## Страницы /favorites и /compare
+
+- `/favorites` (`pages/FavoritesPage.tsx`): `SpecialistCard` с чекбоксом «Выбрать для сравнения» (через проп `footer`). Выбрать можно двух специалистов одной специализации; недоступные чекбоксы отключены с видимой подсказкой. «Сравнить» → `/compare?a=ID&b=ID`. Выбор живёт в состоянии страницы и учитывает только тех, кто ещё в избранном.
+- Чистая логика — `features/compare/comparison.ts` (с тестами): `getSelectBlockReason`, `canCompare`, `resolveComparison` (ошибки `missing | same | unavailable | differentSpecialization`), `getBestValues` (больший стаж, меньшая цена, больший рейтинг; у специалиста без отзывов рейтинг не подсвечивается).
+- `/compare`: от 768px (`useMediaQuery` + `config/breakpoints.ts`) — общая CSS-сетка из двух колонок, одинаковые разделы в одной строке; на мобильных — аккордеон (открыта одна карточка). Подробные разделы переиспользуют секции профиля (`compareRows` в `features/compare/sections.tsx`). Лучшее значение отмечается иконкой ✓ и текстом «Лучше», а не только цветом.
+
 ## Страницы и маршруты
 
 | Маршрут             | Страница                |
@@ -96,9 +118,9 @@ React + TypeScript + Vite, React Router, react-i18next, TanStack Query, CSS Modu
 
 - [x] Каркас
 - [x] Модель данных и слой api
-- [ ] Специалисты
-- [ ] Профиль и отзывы
-- [ ] Избранное и сравнение
+- [x] Специалисты
+- [x] Профиль и отзывы
+- [x] Избранное и сравнение
 - [ ] Профиль ребёнка
 - [ ] Поддержка
 - [ ] Сообщество
