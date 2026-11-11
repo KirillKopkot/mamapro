@@ -1,0 +1,26 @@
+{
+  "brand": { "logoAlt": "Логотип" },
+  "lang": { "switch": "Тіл", "ru": "Русский", "kk": "Қазақша" },
+  "nav": {
+    "main": "Негізгі навигация",
+    "home": "Басты бет",
+    "specialists": "Мамандар",
+    "favorites": "Таңдаулылар",
+    "support": "Қолдау",
+    "profile": "Профиль"
+  },
+  "pages": {
+    "home": "Басты бет",
+    "specialists": "Мамандар",
+    "specialistDetails": "Маманның профилі",
+    "favorites": "Таңдаулылар",
+    "compare": "Салыстыру",
+    "support": "Қолдау",
+    "supportRoute": "Қолдау бағыты",
+    "community": "Қауымдастық",
+    "child": "Баланың профилі",
+    "specialistNew": "Маманды тіркеу",
+    "adminModeration": "Модерация",
+    "notFound": "Бет табылмады"
+  }
+}

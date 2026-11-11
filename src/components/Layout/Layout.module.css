@@ -1,0 +1,17 @@
+.root {
+  min-height: 100vh;
+}
+
+.main {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: var(--space-4);
+  /* место под нижнюю навигацию на мобильных */
+  padding-bottom: calc(var(--bottom-nav-height) + var(--space-4));
+}
+
+@media (min-width: 768px) {
+  .main {
+    padding: var(--space-5);
+  }
+}

@@ -1,0 +1,30 @@
+/* Дизайн-токены. Меняя значения здесь, можно заменить внешний вид целиком. */
+:root {
+  --color-bg: #f7f7f5;
+  --color-surface: #ffffff;
+  --color-text: #1f2328;
+  --color-text-muted: #5f6670;
+  --color-primary: #2f6f6a;
+  --color-primary-contrast: #ffffff;
+  --color-border: #dcdfe3;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+
+  --font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-size-base: 16px;
+  --font-size-lg: 20px;
+  --font-size-xl: 24px;
+  --font-size-sm: 13px;
+
+  --header-height: 56px;
+  --bottom-nav-height: 60px;
+  --content-max-width: 1024px;
+}

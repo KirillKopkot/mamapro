@@ -1,0 +1,26 @@
+{
+  "brand": { "logoAlt": "Логотип" },
+  "lang": { "switch": "Язык", "ru": "Русский", "kk": "Қазақша" },
+  "nav": {
+    "main": "Основная навигация",
+    "home": "Главная",
+    "specialists": "Специалисты",
+    "favorites": "Избранное",
+    "support": "Поддержка",
+    "profile": "Профиль"
+  },
+  "pages": {
+    "home": "Главная",
+    "specialists": "Специалисты",
+    "specialistDetails": "Профиль специалиста",
+    "favorites": "Избранное",
+    "compare": "Сравнение",
+    "support": "Поддержка",
+    "supportRoute": "Маршрут поддержки",
+    "community": "Сообщество",
+    "child": "Профиль ребёнка",
+    "specialistNew": "Регистрация специалиста",
+    "adminModeration": "Модерация",
+    "notFound": "Страница не найдена"
+  }
+}
