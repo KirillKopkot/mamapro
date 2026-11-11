@@ -114,3 +114,30 @@ export interface ChildDraft {
   whatHelps: string
   stressTriggers: string
 }
+
+export type SupportCategory = 'documents' | 'benefits'
+
+export interface SupportArticle {
+  id: string
+  category: SupportCategory
+  title: LocalizedText
+  summary: LocalizedText
+  steps: LocalizedText[]
+  /** Необходимые документы (чек-лист) */
+  documents: { id: string; text: LocalizedText }[]
+}
+
+export interface RouteLink {
+  /** Внутренний маршрут приложения */
+  to: string
+  label: LocalizedText
+}
+
+export interface RouteStep {
+  id: string
+  title: LocalizedText
+  summary: LocalizedText
+  actions: LocalizedText[]
+  documents: LocalizedText[]
+  links: RouteLink[]
+}

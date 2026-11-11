@@ -53,6 +53,7 @@ React + TypeScript + Vite, React Router, react-i18next, TanStack Query, CSS Modu
 - отзывы: `listReviews` (только approved), `addReview` (статус pending)
 - избранное: `listFavorites`, `toggleFavorite`
 - дети: `getChildren`, `saveChild` (бросает ошибку при переполнении хранилища), `deleteChild` (вместе с доступами и черновиком), `getChildForSpecialist`
+- поддержка: `listSupportArticles(category)`, `listRouteSteps`, `getChecklistState`/`toggleChecklistItem`, `getRouteProgress`/`toggleRouteStep`
 - черновики формы ребёнка: `getChildDraft`, `saveChildDraft`, `clearChildDraft`
 - доступы: `getAccessGrants`, `saveAccessGrant` (пустой список разделов = отзыв), `revokeAccessGrant`
 
@@ -60,15 +61,17 @@ React + TypeScript + Vite, React Router, react-i18next, TanStack Query, CSS Modu
 
 Моки (`src/mocks`) — начальное значение, пока в localStorage ничего нет. Изменяемые данные хранятся в localStorage, префикс `mamaProPix:`; ключи определены в `src/api/storage.ts`:
 
-| Ключ                      | Содержимое                                                                       |
-| ------------------------- | -------------------------------------------------------------------------------- |
-| `mamaProPix:specialists`  | `Specialist[]`                                                                   |
-| `mamaProPix:reviews`      | `Review[]`                                                                       |
-| `mamaProPix:favorites`    | `string[]` (id специалистов)                                                     |
-| `mamaProPix:children`     | `Child[]`                                                                        |
-| `mamaProPix:accessGrants` | `AccessGrant[]`                                                                  |
-| `mamaProPix:childDrafts`  | `Record<string, ChildDraft>` (текстовые поля формы; ключ — id ребёнка или `new`) |
-| `lang`                    | язык интерфейса (`ru` / `kk`), i18n                                              |
+| Ключ                           | Содержимое                                                                       |
+| ------------------------------ | -------------------------------------------------------------------------------- |
+| `mamaProPix:specialists`       | `Specialist[]`                                                                   |
+| `mamaProPix:reviews`           | `Review[]`                                                                       |
+| `mamaProPix:favorites`         | `string[]` (id специалистов)                                                     |
+| `mamaProPix:children`          | `Child[]`                                                                        |
+| `mamaProPix:accessGrants`      | `AccessGrant[]`                                                                  |
+| `mamaProPix:childDrafts`       | `Record<string, ChildDraft>` (текстовые поля формы; ключ — id ребёнка или `new`) |
+| `mamaProPix:supportChecklists` | `Record<articleId, string[]>` — отмеченные документы статей                      |
+| `mamaProPix:routeProgress`     | `string[]` — выполненные этапы маршрута                                          |
+| `lang`                         | язык интерфейса (`ru` / `kk`), i18n                                              |
 
 ## Страница /specialists
 
@@ -101,21 +104,29 @@ React + TypeScript + Vite, React Router, react-i18next, TanStack Query, CSS Modu
 - Документы пока хранятся как dataUrl в localStorage (временное хранилище, в UI есть предупреждение; квота браузера ограничена). При замене на HTTP — загрузка файлов на сервер.
 - Приватность: данные ребёнка не попадают в URL (выбранный ребёнок — только состояние компонента), в `console.*` и аналитику. Не добавлять такие вызовы.
 
+## Поддержка (/support, /support/documents, /support/benefits, /support/route)
+
+- Хаб `/support` — карточки трёх разделов. Разделы «Документы» и «Пособия» — страницы со списком статей (раскрываемые карточки: описание, пошаговая инструкция, чек-лист документов с отметками в localStorage). Маршрут — вертикальный список этапов с раскрытием, отметкой «выполнено», прогресс-баром и ссылками на связанные разделы.
+- Контент — двуязычные моки в `src/mocks/support/` (`articles.ts`, `route.ts`); читается только через `src/api/support.ts` и хуки `features/support/hooks.ts`.
+- Весь контент — **демо**: в начале каждой статьи, списка и маршрута показывается пометка «Демо-контент, информацию нужно проверить в профильных организациях перед публикацией». Перед публикацией содержимое нужно проверить и заменить.
+
 ## Страницы и маршруты
 
-| Маршрут             | Страница                |
-| ------------------- | ----------------------- |
-| `/`                 | Главная                 |
-| `/specialists`      | Список специалистов     |
-| `/specialists/:id`  | Профиль специалиста     |
-| `/favorites`        | Избранное               |
-| `/compare`          | Сравнение               |
-| `/support`          | Поддержка               |
-| `/support/route`    | Маршрут поддержки       |
-| `/community`        | Сообщество              |
-| `/child`            | Профиль ребёнка         |
-| `/specialist/new`   | Регистрация специалиста |
-| `/admin/moderation` | Модерация               |
+| Маршрут              | Страница                     |
+| -------------------- | ---------------------------- |
+| `/`                  | Главная                      |
+| `/specialists`       | Список специалистов          |
+| `/specialists/:id`   | Профиль специалиста          |
+| `/favorites`         | Избранное                    |
+| `/compare`           | Сравнение                    |
+| `/support`           | Поддержка (хаб)              |
+| `/support/documents` | Поддержка: документы         |
+| `/support/benefits`  | Поддержка: пособия и выплаты |
+| `/support/route`     | Маршрут поддержки            |
+| `/community`         | Сообщество                   |
+| `/child`             | Профиль ребёнка              |
+| `/specialist/new`    | Регистрация специалиста      |
+| `/admin/moderation`  | Модерация                    |
 
 ## Приватность
 
@@ -133,7 +144,7 @@ React + TypeScript + Vite, React Router, react-i18next, TanStack Query, CSS Modu
 - [x] Профиль и отзывы
 - [x] Избранное и сравнение
 - [x] Профиль ребёнка
-- [ ] Поддержка
+- [x] Поддержка
 - [ ] Сообщество
 - [ ] Регистрация и модерация специалистов
 - [ ] Полировка

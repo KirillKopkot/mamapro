@@ -6,6 +6,8 @@ import SpecialistDetailsPage from './pages/SpecialistDetailsPage'
 import FavoritesPage from './pages/FavoritesPage'
 import ComparePage from './pages/ComparePage'
 import SupportPage from './pages/SupportPage'
+import SupportDocumentsPage from './pages/SupportDocumentsPage'
+import SupportBenefitsPage from './pages/SupportBenefitsPage'
 import SupportRoutePage from './pages/SupportRoutePage'
 import CommunityPage from './pages/CommunityPage'
 import ChildPage from './pages/ChildPage'
@@ -23,6 +25,8 @@ export default function App() {
         <Route path="/favorites" element={<FavoritesPage />} />
         <Route path="/compare" element={<ComparePage />} />
         <Route path="/support" element={<SupportPage />} />
+        <Route path="/support/documents" element={<SupportDocumentsPage />} />
+        <Route path="/support/benefits" element={<SupportBenefitsPage />} />
         <Route path="/support/route" element={<SupportRoutePage />} />
         <Route path="/community" element={<CommunityPage />} />
         <Route path="/child" element={<ChildPage />} />

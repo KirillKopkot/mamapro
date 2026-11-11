@@ -8,6 +8,8 @@ export const storageKeys = {
   children: `${STORAGE_PREFIX}children`,
   accessGrants: `${STORAGE_PREFIX}accessGrants`,
   childDrafts: `${STORAGE_PREFIX}childDrafts`,
+  supportChecklists: `${STORAGE_PREFIX}supportChecklists`,
+  routeProgress: `${STORAGE_PREFIX}routeProgress`,
 } as const
 
 export const apiConfig = { delayMs: 200 }
