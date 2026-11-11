@@ -7,6 +7,7 @@ export const storageKeys = {
   favorites: `${STORAGE_PREFIX}favorites`,
   children: `${STORAGE_PREFIX}children`,
   accessGrants: `${STORAGE_PREFIX}accessGrants`,
+  childDrafts: `${STORAGE_PREFIX}childDrafts`,
 } as const
 
 export const apiConfig = { delayMs: 200 }
@@ -32,6 +33,11 @@ export function writeStorage<T>(key: string, value: T): void {
   } catch {
     // хранилище недоступно или переполнено
   }
+}
+
+/** Как writeStorage, но пробрасывает ошибку (например, переполнение хранилища). */
+export function writeStorageStrict<T>(key: string, value: T): void {
+  localStorage.setItem(key, JSON.stringify(value))
 }
 
 export function newId(prefix: string): string {

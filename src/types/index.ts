@@ -94,3 +94,23 @@ export interface AccessGrant {
   specialistId: string
   sections: ChildSection[]
 }
+
+/** Что специалист видит о ребёнке: только открытые разделы, без имени и возраста. */
+export interface ChildView {
+  childId: string
+  features?: string
+  manifestations?: string
+  whatHelps?: string
+  stressTriggers?: string
+  documents?: ChildDocument[]
+}
+
+/** Черновик формы ребёнка (текстовые поля; документы в черновик не попадают). */
+export interface ChildDraft {
+  name: string
+  age: string
+  features: string
+  manifestations: string
+  whatHelps: string
+  stressTriggers: string
+}

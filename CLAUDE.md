@@ -52,21 +52,23 @@ React + TypeScript + Vite, React Router, react-i18next, TanStack Query, CSS Modu
 - специалисты: `listSpecialists` (только approved), `getSpecialist`, `createSpecialist` (статус pending), `listPendingSpecialists`, `moderateSpecialist`
 - отзывы: `listReviews` (только approved), `addReview` (статус pending)
 - избранное: `listFavorites`, `toggleFavorite`
-- дети: `getChildren`, `saveChild`
+- дети: `getChildren`, `saveChild` (бросает ошибку при переполнении хранилища), `deleteChild` (вместе с доступами и черновиком), `getChildForSpecialist`
+- черновики формы ребёнка: `getChildDraft`, `saveChildDraft`, `clearChildDraft`
 - доступы: `getAccessGrants`, `saveAccessGrant` (пустой список разделов = отзыв), `revokeAccessGrant`
 
 Хуки TanStack Query — в `src/features/*/hooks.ts` (specialists, reviews, favorites, child, access, moderation). Компоненты используют только их.
 
 Моки (`src/mocks`) — начальное значение, пока в localStorage ничего нет. Изменяемые данные хранятся в localStorage, префикс `mamaProPix:`; ключи определены в `src/api/storage.ts`:
 
-| Ключ                      | Содержимое                          |
-| ------------------------- | ----------------------------------- |
-| `mamaProPix:specialists`  | `Specialist[]`                      |
-| `mamaProPix:reviews`      | `Review[]`                          |
-| `mamaProPix:favorites`    | `string[]` (id специалистов)        |
-| `mamaProPix:children`     | `Child[]`                           |
-| `mamaProPix:accessGrants` | `AccessGrant[]`                     |
-| `lang`                    | язык интерфейса (`ru` / `kk`), i18n |
+| Ключ                      | Содержимое                                                                       |
+| ------------------------- | -------------------------------------------------------------------------------- |
+| `mamaProPix:specialists`  | `Specialist[]`                                                                   |
+| `mamaProPix:reviews`      | `Review[]`                                                                       |
+| `mamaProPix:favorites`    | `string[]` (id специалистов)                                                     |
+| `mamaProPix:children`     | `Child[]`                                                                        |
+| `mamaProPix:accessGrants` | `AccessGrant[]`                                                                  |
+| `mamaProPix:childDrafts`  | `Record<string, ChildDraft>` (текстовые поля формы; ключ — id ребёнка или `new`) |
+| `lang`                    | язык интерфейса (`ru` / `kk`), i18n                                              |
 
 ## Страница /specialists
 
@@ -89,6 +91,15 @@ React + TypeScript + Vite, React Router, react-i18next, TanStack Query, CSS Modu
 - `/favorites` (`pages/FavoritesPage.tsx`): `SpecialistCard` с чекбоксом «Выбрать для сравнения» (через проп `footer`). Выбрать можно двух специалистов одной специализации; недоступные чекбоксы отключены с видимой подсказкой. «Сравнить» → `/compare?a=ID&b=ID`. Выбор живёт в состоянии страницы и учитывает только тех, кто ещё в избранном.
 - Чистая логика — `features/compare/comparison.ts` (с тестами): `getSelectBlockReason`, `canCompare`, `resolveComparison` (ошибки `missing | same | unavailable | differentSpecialization`), `getBestValues` (больший стаж, меньшая цена, больший рейтинг; у специалиста без отзывов рейтинг не подсвечивается).
 - `/compare`: от 768px (`useMediaQuery` + `config/breakpoints.ts`) — общая CSS-сетка из двух колонок, одинаковые разделы в одной строке; на мобильных — аккордеон (открыта одна карточка). Подробные разделы переиспользуют секции профиля (`compareRows` в `features/compare/sections.tsx`). Лучшее значение отмечается иконкой ✓ и текстом «Лучше», а не только цветом.
+
+## Профиль ребёнка и модель доступа (/child)
+
+- Модель доступа: по умолчанию данные ребёнка закрыты для всех. Родитель выдаёт `AccessGrant { childId, specialistId, sections }` конкретному специалисту по разделам (`features`, `manifestations`, `whatHelps`, `stressTriggers`, `documents`). Пустой список разделов = нет доступа; доступ отзывается в любой момент.
+- `getChildForSpecialist(childId, specialistId)` (`src/api/children.ts`) — единственный способ получить данные ребёнка «глазами специалиста»: без гранта возвращает `null` (не раскрывается ничего), с грантом — `ChildView` только с разрешёнными разделами. **Имя и возраст специалисту не раскрываются никогда.** Фильтрация — чистая `pickSections` (`src/api/childView.ts`), покрыта тестами.
+- Удаление ребёнка (`deleteChild`) требует подтверждения в UI и удаляет связанные доступы и черновик.
+- Форма: валидация в `features/child/validation.ts` (имя обязательно, возраст 0–18, тексты до 2000 символов, файлы PDF/JPG/PNG до 5 МБ). Автосохранение черновика текстовых полей с задержкой 600 мс; документы в черновик не попадают.
+- Документы пока хранятся как dataUrl в localStorage (временное хранилище, в UI есть предупреждение; квота браузера ограничена). При замене на HTTP — загрузка файлов на сервер.
+- Приватность: данные ребёнка не попадают в URL (выбранный ребёнок — только состояние компонента), в `console.*` и аналитику. Не добавлять такие вызовы.
 
 ## Страницы и маршруты
 
@@ -121,7 +132,7 @@ React + TypeScript + Vite, React Router, react-i18next, TanStack Query, CSS Modu
 - [x] Специалисты
 - [x] Профиль и отзывы
 - [x] Избранное и сравнение
-- [ ] Профиль ребёнка
+- [x] Профиль ребёнка
 - [ ] Поддержка
 - [ ] Сообщество
 - [ ] Регистрация и модерация специалистов
