@@ -1,5 +1,6 @@
+import { lazy, Suspense } from 'react'
 import { Route, Routes } from 'react-router-dom'
-import { Layout } from './components/Layout/Layout'
+import { Layout } from './components/layout/Layout'
 import HomePage from './pages/HomePage'
 import SpecialistsPage from './pages/SpecialistsPage'
 import SpecialistDetailsPage from './pages/SpecialistDetailsPage'
@@ -16,6 +17,9 @@ import ChildPage from './pages/ChildPage'
 import SpecialistNewPage from './pages/SpecialistNewPage'
 import AdminModerationPage from './pages/AdminModerationPage'
 import NotFoundPage from './pages/NotFoundPage'
+
+// Dev-страница UI-кита: в production-сборку не попадает
+const UiKitPage = import.meta.env.DEV ? lazy(() => import('./pages/UiKitPage')) : null
 
 export default function App() {
   return (
@@ -36,6 +40,16 @@ export default function App() {
         <Route path="/child" element={<ChildPage />} />
         <Route path="/specialist/new" element={<SpecialistNewPage />} />
         <Route path="/admin/moderation" element={<AdminModerationPage />} />
+        {UiKitPage && (
+          <Route
+            path="/_ui"
+            element={
+              <Suspense fallback={null}>
+                <UiKitPage />
+              </Suspense>
+            }
+          />
+        )}
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>

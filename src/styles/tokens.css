@@ -1,30 +1,94 @@
-/* Дизайн-токены. Меняя значения здесь, можно заменить внешний вид целиком. */
+/* Дизайн-токены (редизайн). Все цвета, радиусы, отступы и шрифты берём только отсюда. */
 :root {
-  --color-bg: #f7f7f5;
-  --color-surface: #ffffff;
-  --color-text: #1f2328;
-  --color-text-muted: #5f6670;
-  --color-primary: #2f6f6a;
-  --color-primary-contrast: #ffffff;
-  --color-border: #dcdfe3;
+  /* Палитра (измерена по макету) */
+  --color-primary: #cd2141;
+  --color-primary-hover: #b51c38;
+  --color-pink: #fff4f4;
+  --color-green: #ecf3f0;
+  --color-green-text: #386154;
+  --color-surface: #faf9fa;
+  --color-lavender: #f1eef5;
+  --color-text: #302c35;
+  --color-text-secondary: #706974;
+  --color-border: #e5e5e6;
+  --color-white: #ffffff;
 
+  /* Служебные состояния (ошибки, предупреждения) */
+  --color-error: #b42318;
+  --color-error-bg: #fdecea;
+  --color-warning: #b7791f;
+  --color-warning-bg: #fdf3df;
+  --color-disabled-bg: #efeef0;
+
+  --color-overlay: rgb(48 44 53 / 40%);
+  --shadow-popover: 0 8px 24px rgb(48 44 53 / 12%);
+  --shadow-search: 0 2px 8px rgb(48 44 53 / 12%);
+
+  /* Радиусы */
+  --radius-hero: 28px;
+  --radius-card: 20px;
+  --radius-field: 14px;
+  --radius-button: 12px;
+  --radius-tag: 8px;
+  --radius-pill: 999px;
+
+  /* Отступы */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
   --space-4: 16px;
   --space-5: 24px;
   --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
 
-  --radius-sm: 6px;
-  --radius-md: 10px;
+  /* Шрифты */
+  --font-family:
+    'Manrope Variable', 'Inter Variable', Manrope, Inter, system-ui, -apple-system,
+    'Segoe UI', Roboto, sans-serif;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
 
-  --font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --font-size-base: 16px;
-  --font-size-lg: 20px;
-  --font-size-xl: 24px;
-  --font-size-sm: 13px;
+  --font-size-hero: clamp(2rem, 1.2rem + 3.4vw, 4rem); /* H1 героя: 32px → 64px */
+  --font-size-page-title: clamp(1.75rem, 1.3rem + 1.6vw, 2.5rem); /* H1 страниц */
+  --font-size-h2: clamp(1.5rem, 1.1rem + 1.2vw, 2rem); /* H2 разделов: 24px → 32px */
+  --font-size-card-title: clamp(1.125rem, 1.05rem + 0.3vw, 1.25rem); /* 18px → 20px */
+  --font-size-base: 1rem;
+  --font-size-sm: 0.875rem;
+  --font-size-xs: 0.75rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.5rem;
 
-  --header-height: 56px;
-  --bottom-nav-height: 60px;
-  --content-max-width: 1024px;
+  --line-height-tight: 1.2;
+  --line-height-base: 1.5;
+
+  /* Каркас */
+  --container-max: 1200px;
+  --container-gutter: 16px;
+  --header-height: 72px;
+  --bottom-nav-height: 64px;
+  --control-height: 48px;
+
+  /* Совместимость со старыми стилями (постепенно заменять на новые имена) */
+  --color-bg: var(--color-white);
+  --color-text-muted: var(--color-text-secondary);
+  --color-primary-contrast: var(--color-white);
+  --radius-sm: var(--radius-tag);
+  --radius-md: var(--radius-button);
+  --content-max-width: var(--container-max);
+}
+
+@media (min-width: 768px) {
+  :root {
+    --container-gutter: 32px;
+    --radius-hero: 28px;
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --radius-hero: 24px;
+  }
 }

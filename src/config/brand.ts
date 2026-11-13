@@ -1,5 +1,4 @@
-// Заглушка бренда: заменить на финальное название и логотип.
+// Название и логотип бренда. Логотип — src/assets/icons/logo.svg (сейчас временная заглушка).
 export const brand = {
-  name: 'BrandName',
-  logoLetter: 'B',
+  name: 'МамаПро',
 } as const

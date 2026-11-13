@@ -30,7 +30,7 @@
 }
 
 .field [aria-invalid='true'] {
-  border-color: #b42318;
+  border-color: var(--color-error);
 }
 
 .fieldset {
@@ -54,7 +54,7 @@
 }
 
 .error {
-  color: #b42318;
+  color: var(--color-error);
   font-size: var(--font-size-sm);
 }
 
@@ -115,8 +115,8 @@
 
 .danger {
   justify-self: start;
-  border-color: #b42318;
-  color: #b42318;
+  border-color: var(--color-error);
+  color: var(--color-error);
 }
 
 .primary:disabled,

@@ -5,7 +5,11 @@
   "lang": {
     "switch": "Тіл",
     "ru": "Русский",
-    "kk": "Қазақша"
+    "kk": "Қазақша",
+    "short": {
+      "ru": "Рус",
+      "kk": "Қаз"
+    }
   },
   "nav": {
     "main": "Негізгі навигация",
@@ -13,7 +17,11 @@
     "specialists": "Мамандар",
     "favorites": "Таңдаулылар",
     "support": "Қолдау",
-    "profile": "Профиль"
+    "search": "Іздеу",
+    "help": "Көмек",
+    "bottom": "Төменгі навигация",
+    "menuOpen": "Мәзірді ашу",
+    "menuClose": "Мәзірді жабу"
   },
   "pages": {
     "home": "Басты бет",
@@ -408,5 +416,67 @@
       "required": "Себебін көрсетіңіз",
       "tooLong": "500 таңбадан аспауы керек"
     }
-  }
+  },
+  "auth": {
+    "login": "Кіру"
+  },
+  "footer": {
+    "tagline": "Бүкіл отбасы үшін көмекті қамқорлықпен іздеу",
+    "nav": "Сервис туралы ақпарат",
+    "about": "Сервис туралы",
+    "privacy": "Құпиялылық",
+    "contacts": "Байланыс"
+  },
+  "breadcrumbs": {
+    "label": "Навигациялық тізбек"
+  },
+  "devUi": {
+    "title": "UI-жинақ",
+    "description": "Dev-бет: барлық компоненттердің мысалдары. Production-ға кірмейді.",
+    "colors": "Палитра",
+    "typography": "Типографика",
+    "eyebrow": "Баламен және сізбен бірге",
+    "heroTitle": "Балаға қолдау. Анаға сүйеніш.",
+    "kazakhLetters": "Ә Ғ Қ Ң Ө Ұ Ү Һ І — ә ғ қ ң ө ұ ү һ і",
+    "buttons": "Батырмалар",
+    "primary": "Негізгі",
+    "secondary": "Қосымша",
+    "link": "Сілтеме",
+    "disabled": "Өшірулі",
+    "loading": "Жүктелуде",
+    "asLink": "Сілтеме-батырма",
+    "fields": "Өрістер",
+    "email": "Электрондық пошта",
+    "hint": "Өріске кеңес",
+    "errorText": "Дұрыс мекенжай енгізіңіз",
+    "city": "Қала",
+    "astana": "Астана",
+    "almaty": "Алматы",
+    "about": "Өзім туралы",
+    "consent": "Деректерімді өңдеуге келісемін",
+    "cards": "Карталар",
+    "cardDefault": "Қарапайым",
+    "cardWhite": "Жиегі бар ақ",
+    "cardPink": "Қызғылт",
+    "cardGreen": "Жасыл",
+    "tagsChips": "Тегтер мен чиптер",
+    "time": "Кеңес уақыты",
+    "timezone": "Астана уақыты · UTC+5",
+    "notices": "Ақпараттық блоктар",
+    "noticeGreenTitle": "Жасыл блок",
+    "noticePinkTitle": "Қызғылт блок",
+    "noticeText": "Ата-анаға арналған қысқа түсіндірме."
+  },
+  "_review": [
+    "lang.short",
+    "nav.search",
+    "nav.help",
+    "nav.bottom",
+    "nav.menuOpen",
+    "nav.menuClose",
+    "auth.login",
+    "footer.*",
+    "breadcrumbs.label",
+    "devUi.* (dev-страница, не публикуется)"
+  ]
 }

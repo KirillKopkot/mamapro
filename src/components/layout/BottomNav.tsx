@@ -1,13 +1,13 @@
 import { NavLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { navItems } from '../navItems'
+import { bottomNav } from './navItems'
 import styles from './BottomNav.module.css'
 
 export function BottomNav() {
   const { t } = useTranslation()
   return (
-    <nav className={styles.nav} aria-label={t('nav.main')}>
-      {navItems.map((item) => (
+    <nav className={styles.nav} aria-label={t('nav.bottom')}>
+      {bottomNav.map((item) => (
         <NavLink
           key={item.to}
           to={item.to}

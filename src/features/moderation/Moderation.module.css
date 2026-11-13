@@ -6,9 +6,9 @@
 .demo {
   margin: 0;
   padding: var(--space-2) var(--space-3);
-  border-left: 4px solid #b7791f;
+  border-left: 4px solid var(--color-warning);
   border-radius: var(--radius-sm);
-  background: #fdf3df;
+  background: var(--color-warning-bg);
 }
 
 .list {
@@ -73,7 +73,7 @@
 }
 
 .error {
-  color: #b42318;
+  color: var(--color-error);
   font-size: var(--font-size-sm);
 }
 
@@ -82,7 +82,7 @@
   gap: var(--space-2);
   width: 100%;
   padding: var(--space-3);
-  border: 1px solid #b42318;
+  border: 1px solid var(--color-error);
   border-radius: var(--radius-sm);
 }
 
@@ -104,7 +104,7 @@
 }
 
 .field [aria-invalid='true'] {
-  border-color: #b42318;
+  border-color: var(--color-error);
 }
 
 .actions {
@@ -132,8 +132,8 @@
 }
 
 .danger {
-  border-color: #b42318;
-  color: #b42318;
+  border-color: var(--color-error);
+  color: var(--color-error);
 }
 
 .primary:disabled,

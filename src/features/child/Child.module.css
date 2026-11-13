@@ -18,7 +18,7 @@
 .privacy {
   padding: var(--space-3);
   border-left: 4px solid var(--color-primary);
-  background: #e6f2ee;
+  background: var(--color-green);
   border-radius: var(--radius-sm);
 }
 
@@ -30,13 +30,13 @@
 .warning {
   margin: var(--space-2) 0;
   padding: var(--space-2) var(--space-3);
-  border-left: 4px solid #b7791f;
-  background: #fdf3df;
+  border-left: 4px solid var(--color-warning);
+  background: var(--color-warning-bg);
   border-radius: var(--radius-sm);
 }
 
 .error {
-  color: #b42318;
+  color: var(--color-error);
   font-size: var(--font-size-sm);
 }
 
@@ -62,7 +62,7 @@
 }
 
 .field [aria-invalid='true'] {
-  border-color: #b42318;
+  border-color: var(--color-error);
 }
 
 .fieldset {
@@ -128,8 +128,8 @@
 }
 
 .danger {
-  border-color: #b42318;
-  color: #b42318;
+  border-color: var(--color-error);
+  color: var(--color-error);
 }
 
 .primary:disabled,
@@ -245,6 +245,6 @@
 
 .confirm {
   padding: var(--space-3);
-  border: 1px solid #b42318;
+  border: 1px solid var(--color-error);
   border-radius: var(--radius-sm);
 }
