@@ -1,16 +1,20 @@
 import { useEffect, useState } from 'react'
-import { Link, NavLink, useLocation } from 'react-router-dom'
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { brand } from '../../config/brand'
 import logoUrl from '../../assets/icons/logo.svg'
 import { LanguageSwitcher } from '../LanguageSwitcher/LanguageSwitcher'
+import { useAuth } from '../../features/auth/useAuth'
 import { Button, PageContainer } from '../ui'
+import { UserMenu } from './UserMenu'
 import { headerNav } from './navItems'
 import styles from './Header.module.css'
 
 export function Header() {
   const { t } = useTranslation()
   const { pathname } = useLocation()
+  const { user, isLoading, logout } = useAuth()
+  const navigate = useNavigate()
   // Меню привязано к странице, на которой открыто: при переходе закрывается само
   const [openAt, setOpenAt] = useState<string | null>(null)
   const menuOpen = openAt === pathname
@@ -53,9 +57,15 @@ export function Header() {
 
           <div className={styles.actions}>
             <LanguageSwitcher />
-            <Button to="/login" variant="secondary">
-              {t('auth.login')}
-            </Button>
+            {user ? (
+              <UserMenu />
+            ) : (
+              !isLoading && (
+                <Button to="/login" variant="secondary">
+                  {t('auth.loginButton')}
+                </Button>
+              )
+            )}
           </div>
 
           <div className={styles.mobileLang}>
@@ -90,11 +100,31 @@ export function Header() {
               </NavLink>
             ))}
           </nav>
+          {user && (
+            <div className={styles.panelNav}>
+              <Link to="/child" className={styles.panelLink}>
+                {t('auth.childProfile')}
+              </Link>
+              <button
+                type="button"
+                className={`${styles.panelLink} ${styles.panelButton}`}
+                onClick={async () => {
+                  setMenuOpen(false)
+                  await logout()
+                  navigate('/')
+                }}
+              >
+                {t('auth.logout')}
+              </button>
+            </div>
+          )}
           <div className={styles.panelFooter}>
             <LanguageSwitcher />
-            <Button to="/login" variant="secondary">
-              {t('auth.login')}
-            </Button>
+            {!user && !isLoading && (
+              <Button to="/login" variant="secondary">
+                {t('auth.loginButton')}
+              </Button>
+            )}
           </div>
         </div>
       )}

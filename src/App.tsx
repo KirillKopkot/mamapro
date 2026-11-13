@@ -16,6 +16,10 @@ import ChatPage from './pages/ChatPage'
 import ChildPage from './pages/ChildPage'
 import SpecialistNewPage from './pages/SpecialistNewPage'
 import AdminModerationPage from './pages/AdminModerationPage'
+import LoginPage from './pages/LoginPage'
+import RegisterPage from './pages/RegisterPage'
+import ComingSoonPage from './pages/ComingSoonPage'
+import { RequireAuth } from './features/auth/RequireAuth'
 import NotFoundPage from './pages/NotFoundPage'
 
 // Dev-страница UI-кита: в production-сборку не попадает
@@ -37,7 +41,40 @@ export default function App() {
         <Route path="/community" element={<CommunityPage />} />
         <Route path="/community/groups/:groupId" element={<CommunityGroupPage />} />
         <Route path="/community/chat/:consultantId" element={<ChatPage />} />
-        <Route path="/child" element={<ChildPage />} />
+        <Route
+          path="/child"
+          element={
+            <RequireAuth>
+              <ChildPage />
+            </RequireAuth>
+          }
+        />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route
+          path="/forgot-password"
+          element={
+            <ComingSoonPage
+              titleKey="pages.forgotPassword"
+              textKey="auth.forgotSoon"
+              backTo="/login"
+              backKey="auth.backToLogin"
+            />
+          }
+        />
+        <Route
+          path="/specialists/:id/booking"
+          element={
+            <RequireAuth>
+              <ComingSoonPage
+                titleKey="pages.booking"
+                textKey="auth.bookingSoon"
+                backTo="/specialists"
+                backKey="auth.backToSpecialists"
+              />
+            </RequireAuth>
+          }
+        />
         <Route path="/specialist/new" element={<SpecialistNewPage />} />
         <Route path="/admin/moderation" element={<AdminModerationPage />} />
         {UiKitPage && (

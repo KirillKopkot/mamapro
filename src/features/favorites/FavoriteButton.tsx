@@ -1,4 +1,7 @@
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { useAuth } from '../auth/useAuth'
+import { loginUrl } from '../auth/redirect'
 import { useFavorites, useToggleFavorite } from './hooks'
 import styles from './FavoriteButton.module.css'
 
@@ -11,6 +14,9 @@ export function FavoriteButton({ specialistId, className }: FavoriteButtonProps)
   const { t } = useTranslation()
   const { data: favorites = [] } = useFavorites()
   const toggle = useToggleFavorite()
+  const { user, isLoading } = useAuth()
+  const navigate = useNavigate()
+  const { pathname, search } = useLocation()
   const active = favorites.includes(specialistId)
   const label = t(active ? 'favorites.remove' : 'favorites.add')
 
@@ -21,8 +27,12 @@ export function FavoriteButton({ specialistId, className }: FavoriteButtonProps)
       aria-pressed={active}
       aria-label={label}
       title={label}
-      disabled={toggle.isPending}
-      onClick={() => toggle.mutate(specialistId)}
+      disabled={toggle.isPending || isLoading}
+      onClick={() => {
+        // гость: сначала вход, затем возврат на эту страницу
+        if (!user) navigate(loginUrl(pathname + search))
+        else toggle.mutate(specialistId)
+      }}
     >
       <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
         <path

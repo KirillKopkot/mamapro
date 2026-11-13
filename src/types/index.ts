@@ -217,3 +217,16 @@ export interface SpecialistFormValues {
   }[]
   socials: { id: string; type: SocialType; url: string }[]
 }
+
+/** Пользователь (демо-авторизация без бэкенда). */
+export interface User {
+  id: string
+  name: string
+  email: string
+  /** SHA-256 пароля (демо, НЕ настоящая защита). */
+  passwordHash: string
+  createdAt: string
+}
+
+/** Пользователь без хэша пароля — единственное, что отдаёт слой api наружу. */
+export type PublicUser = Omit<User, 'passwordHash'>

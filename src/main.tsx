@@ -7,6 +7,7 @@ import './styles/fonts.css'
 import './styles/tokens.css'
 import './styles/global.css'
 import { queryClient } from './api/queryClient'
+import { AuthProvider } from './features/auth/AuthProvider'
 import App from './App'
 
 const root = document.getElementById('root')
@@ -15,9 +16,11 @@ if (!root) throw new Error('Root element not found')
 createRoot(root).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <AuthProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </AuthProvider>
     </QueryClientProvider>
   </StrictMode>,
 )

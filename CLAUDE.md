@@ -28,7 +28,7 @@ React + TypeScript + Vite, React Router, react-i18next, TanStack Query, CSS Modu
 - **Никаких хардкод-цветов** (hex/rgb) вне `tokens.css`; радиусы, отступы, шрифты — только токены. Старые имена (`--color-text-muted`, `--radius-sm` и т. п.) оставлены как алиасы, в новом коде использовать новые.
 - Страницы собираются из `components/ui`; свои кнопки и поля не писать.
 - Цена: «7 000 ₸» (пробел-разделитель тысяч, ключи `price.*`). Города: только Астана и Алматы. Время: «Астаны · UTC+5».
-- Шапка: активная ссылка красная с линией 3px на нижней границе шапки; до 768px — гамбургер + `BottomNav` (Главная, Поиск, Избранное, Помощь). Кнопки «Профиль» и аватарки в шапке нет (состояние «вошёл» — отдельный этап авторизации: круглая аватарка вместо «Войти»).
+- Шапка: активная ссылка красная с линией 3px на нижней границе шапки; до 768px — гамбургер + `BottomNav` (Главная, Поиск, Избранное, Помощь). У гостя в шапке «Войти»; у вошедшего круглая аватарка 44px с меню («Профиль ребёнка», «Выйти»), в мобильном меню те же пункты.
 - Dev-страница `/_ui` (только `import.meta.env.DEV`) показывает весь UI-кит — обновлять при добавлении компонентов.
 - Ключ `_review` в `kk.json` — список ключей казахского перевода, которые должен проверить носитель.
 
@@ -92,6 +92,8 @@ React + TypeScript + Vite, React Router, react-i18next, TanStack Query, CSS Modu
 | `mamaProPix:communityMemberships` | `string[]` — сообщества, в которые вступил пользователь                          |
 | `mamaProPix:chatMessages`         | `Record<consultantId, ChatMessage[]>` — демо-переписка                           |
 | `mamaProPix:specialistDraft`      | `SpecialistFormValues` — черновик формы специалиста                              |
+| `mamaProPix:users`                | `User[]` (демо-авторизация)                                                      |
+| `mamaProPix:session`              | `{ userId }` (localStorage или sessionStorage)                                   |
 | `lang`                            | язык интерфейса (`ru` / `kk`), i18n                                              |
 
 ## Страница /specialists
@@ -115,6 +117,16 @@ React + TypeScript + Vite, React Router, react-i18next, TanStack Query, CSS Modu
 - `/favorites` (`pages/FavoritesPage.tsx`): `SpecialistCard` с чекбоксом «Выбрать для сравнения» (через проп `footer`). Выбрать можно двух специалистов одной специализации; недоступные чекбоксы отключены с видимой подсказкой. «Сравнить» → `/compare?a=ID&b=ID`. Выбор живёт в состоянии страницы и учитывает только тех, кто ещё в избранном.
 - Чистая логика — `features/compare/comparison.ts` (с тестами): `getSelectBlockReason`, `canCompare`, `resolveComparison` (ошибки `missing | same | unavailable | differentSpecialization`), `getBestValues` (больший стаж, меньшая цена, больший рейтинг; у специалиста без отзывов рейтинг не подсвечивается).
 - `/compare`: от 768px (`useMediaQuery` + `config/breakpoints.ts`) — общая CSS-сетка из двух колонок, одинаковые разделы в одной строке; на мобильных — аккордеон (открыта одна карточка). Подробные разделы переиспользуют секции профиля (`compareRows` в `features/compare/sections.tsx`). Лучшее значение отмечается иконкой ✓ и текстом «Лучше», а не только цветом.
+
+## Авторизация (демо, без бэкенда)
+
+- `src/api/auth.ts`: `register` (сразу открывает сессию), `login`, `logout`, `getCurrentUser`. Тип `User { id, name, email, passwordHash, createdAt }`; наружу отдаётся `PublicUser` без хэша. Пользователи — `mamaProPix:users`, сессия `{ userId }` — `mamaProPix:session`: в localStorage при «Запомнить меня», иначе в sessionStorage.
+- **Пароль хранится как SHA-256 (Web Crypto, e-mail как «соль»). Это НЕ настоящая защита**: хэш лежит в браузере, сессию можно подделать правкой хранилища. Только для демо; заменить на бэкенд (серверное хранение, bcrypt/argon2, токены/cookie).
+- Ошибки входа «пользователь не найден» и «неверный пароль» неразличимы (`AuthError('invalidCredentials')`); занятый e-mail — `emailTaken`.
+- `features/auth/`: `AuthProvider` + `useAuth()` (user, isLoading, login, register, logout), `RequireAuth`, `AuthShell` (каркас /login и /register), `LoginForm`, `RegisterForm`, `validation.ts` (пароль: ≥ 8 символов, буква и цифра), `redirect.ts` (`safeNext` — только внутренние пути, `loginUrl`). Ошибки под полями текстом, `aria-invalid`, фокус на первом поле с ошибкой.
+- Редирект после входа/регистрации — `?next=` или `/`.
+- Маршруты: `/child` и `/specialists/:id/booking` (заглушка) обёрнуты в `RequireAuth`. `/favorites` для просмотра открыт, но `FavoriteButton` у гостя ведёт на `/login?next=...`. `/forgot-password` — заглушка «появится позже».
+- Данные ребёнка и избранное пока не привязаны к пользователю (общие для браузера) — привязать при появлении бэкенда.
 
 ## Профиль ребёнка и модель доступа (/child)
 
@@ -147,21 +159,25 @@ React + TypeScript + Vite, React Router, react-i18next, TanStack Query, CSS Modu
 
 ## Страницы и маршруты
 
-| Маршрут              | Страница                     |
-| -------------------- | ---------------------------- |
-| `/`                  | Главная                      |
-| `/specialists`       | Список специалистов          |
-| `/specialists/:id`   | Профиль специалиста          |
-| `/favorites`         | Избранное                    |
-| `/compare`           | Сравнение                    |
-| `/support`           | Поддержка (хаб)              |
-| `/support/documents` | Поддержка: документы         |
-| `/support/benefits`  | Поддержка: пособия и выплаты |
-| `/support/route`     | Маршрут поддержки            |
-| `/community`         | Сообщество                   |
-| `/child`             | Профиль ребёнка              |
-| `/specialist/new`    | Регистрация специалиста      |
-| `/admin/moderation`  | Модерация                    |
+| Маршрут                    | Страница                      |
+| -------------------------- | ----------------------------- |
+| `/`                        | Главная                       |
+| `/specialists`             | Список специалистов           |
+| `/specialists/:id`         | Профиль специалиста           |
+| `/favorites`               | Избранное                     |
+| `/compare`                 | Сравнение                     |
+| `/support`                 | Поддержка (хаб)               |
+| `/support/documents`       | Поддержка: документы          |
+| `/support/benefits`        | Поддержка: пособия и выплаты  |
+| `/support/route`           | Маршрут поддержки             |
+| `/community`               | Сообщество                    |
+| `/child`                   | Профиль ребёнка (нужен вход)  |
+| `/login`                   | Вход                          |
+| `/register`                | Регистрация                   |
+| `/forgot-password`         | Восстановление (заглушка)     |
+| `/specialists/:id/booking` | Запись (заглушка, нужен вход) |
+| `/specialist/new`          | Регистрация специалиста       |
+| `/admin/moderation`        | Модерация                     |
 
 ## Приватность
 
@@ -178,6 +194,7 @@ React + TypeScript + Vite, React Router, react-i18next, TanStack Query, CSS Modu
 - [ ] Верификация консультантов и согласие на публикацию профилей.
 - [ ] Модерация отзывов и рейтингов; пересчёт `ratingAvg`/`reviewsCount` на сервере.
 - [ ] Замена localStorage на HTTP-реализацию `src/api`, серверное хранение документов ребёнка и контроль доступа (`AccessGrant`) на сервере.
+- [ ] Настоящая авторизация на бэкенде вместо демо (SHA-256 в localStorage — не защита), восстановление пароля, подтверждение e-mail.
 - [ ] Проверить демо-контент раздела «Поддержка» в профильных организациях.
 
 ## Definition of done (для каждого этапа)
@@ -201,5 +218,6 @@ React + TypeScript + Vite, React Router, react-i18next, TanStack Query, CSS Modu
 - [x] Сообщество (демо)
 - [x] Регистрация и модерация специалистов
 - [x] Редизайн: фундамент (токены, шрифт, UI-кит, каркас)
+- [x] Авторизация (демо): /login, /register, шапка, RequireAuth
 - [ ] Редизайн страниц по макетам `design/` (главная, специалисты, профиль, вход/регистрация, ребёнок и др.)
 - [ ] Полировка

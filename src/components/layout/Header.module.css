@@ -83,6 +83,15 @@
   flex-direction: column;
 }
 
+.panelButton {
+  border: 0;
+  background: none;
+  font: inherit;
+  font-weight: var(--font-weight-medium);
+  text-align: left;
+  cursor: pointer;
+}
+
 .panelLink {
   padding: var(--space-3) 0;
   color: var(--color-text);

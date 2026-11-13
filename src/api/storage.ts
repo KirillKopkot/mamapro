@@ -13,6 +13,8 @@ export const storageKeys = {
   communityMemberships: `${STORAGE_PREFIX}communityMemberships`,
   chatMessages: `${STORAGE_PREFIX}chatMessages`,
   specialistDraft: `${STORAGE_PREFIX}specialistDraft`,
+  users: `${STORAGE_PREFIX}users`,
+  session: `${STORAGE_PREFIX}session`,
 } as const
 
 export const apiConfig = {
