@@ -42,7 +42,7 @@ React + TypeScript + Vite, React Router, react-i18next, TanStack Query, CSS Modu
 - `pages/` — страницы-маршруты (тонкие, собирают компоненты и фичи).
 - `styles/` — глобальные стили, шрифты (`fonts.css`) и дизайн-токены (`tokens.css`).
 - `types/` — общие TypeScript-типы.
-- `config/` — конфигурация приложения (`brand.ts` — название «МамаПро»; логотип — `src/assets/icons/logo.svg`, временная заглушка).
+- `config/` — конфигурация приложения (`brand.ts` — название «МамаПро»; логотип — `src/assets/icons/logo.png`, он же favicon (`public/favicon.png`)).
 
 ## Соглашения
 
@@ -96,10 +96,18 @@ React + TypeScript + Vite, React Router, react-i18next, TanStack Query, CSS Modu
 | `mamaProPix:session`              | `{ userId }` (localStorage или sessionStorage)                                   |
 | `lang`                            | язык интерфейса (`ru` / `kk`), i18n                                              |
 
+## Главная (/)
+
+- Компоненты — `src/features/home/` (`HeroSection`, `DirectionsSection`, `StartSection`, `StepsSection`, `BannerSection`, `FaqSection`), тексты — `home.*` в словарях, ссылки и списки — `content.ts`. Блоки разведены по макету: «Помощь, с которой можно начать» (`#directions`) и баннер «Можно быть мамой…» — только от 768px; «С чего начать?» (сетка 2×2) и кнопка «Найти специалиста» с ссылкой на сообщество — только до 768px. Показ управляется классами `onlyDesktop`/`onlyMobile` в `Home.module.css` (единственное место с `max-width`).
+- Панель поиска (десктоп): текст и формат уходят в `/specialists` через `buildSearchUrl` (`searchUrl.ts`, с тестами): `q` и существующий параметр `formats` (онлайн → `online`, «очно» → `clinic,home`).
+- Карточки направлений ведут на `/specialists?spec=...`: параметр `spec` теперь список специализаций через запятую (`SpecialistFilters.specializations: string[]`). Если выбрано несколько, в select фильтра показывается неактивный пункт «Выбрано направлений: N». Названия специализаций в `content.ts` — русские, как в данных.
+- Шагов четыре (по мобильному макету) на обоих размерах: на десктопе сетка 2×2.
+- Тексты FAQ и шагов взяты из макета дословно (включая «Все специалисты проверены нами» — до реальной верификации это нужно пересмотреть).
+
 ## Страница /specialists
 
 - Компоненты в `src/features/specialists/`: `SpecialistCard`, `SortBar`, `FiltersPanel` (на мобильных — нижняя панель по кнопке «Фильтры», от 768px — боковая колонка); `FavoriteButton` — в `src/features/favorites/`.
-- Фильтры и сортировка хранятся в URL query-параметрах (`q`, `city`, `spec`, `formats`, `priceMin`, `priceMax`, `exp`, `rating`, `sort`, `dir`); значения по умолчанию в URL не пишутся. Разбор/сборка параметров, фильтрация и сортировка — чистые функции в `filtering.ts` (с тестами).
+- Фильтры и сортировка хранятся в URL query-параметрах (`q`, `city`, `spec` (список через запятую), `formats`, `priceMin`, `priceMax`, `exp`, `rating`, `sort`, `dir`); значения по умолчанию в URL не пишутся. Разбор/сборка параметров, фильтрация и сортировка — чистые функции в `filtering.ts` (с тестами).
 - Специализация в фильтре идентифицируется русским названием (`specialization.ru`); список опций строится из данных.
 - Онлайн-специалист без города попадает в выдачу при фильтре по любому городу.
 - Склонения («N лет опыта», «N отзывов») — через plural-ключи i18next (`_one/_few/_many/_other`, для kk `_one/_other`); хук `useLang()` из `src/i18n/useLang.ts` даёт текущий язык для выбора `LocalizedText`.
@@ -219,5 +227,6 @@ React + TypeScript + Vite, React Router, react-i18next, TanStack Query, CSS Modu
 - [x] Регистрация и модерация специалистов
 - [x] Редизайн: фундамент (токены, шрифт, UI-кит, каркас)
 - [x] Авторизация (демо): /login, /register, шапка, RequireAuth
-- [ ] Редизайн страниц по макетам `design/` (главная, специалисты, профиль, вход/регистрация, ребёнок и др.)
+- [x] Главная страница (редизайн)
+- [ ] Редизайн страниц по макетам `design/` (специалисты, профиль, вход/регистрация, ребёнок и др.)
 - [ ] Полировка

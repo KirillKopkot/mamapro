@@ -23,6 +23,9 @@ function toNumberOrNull(value: string): number | null {
   return Number.isFinite(n) && n >= 0 ? n : null
 }
 
+/** Служебное значение select, когда выбрано несколько специализаций (например, из главной). */
+const MULTI_VALUE = '__multiple__'
+
 export function FiltersPanel({
   specialists,
   filters,
@@ -74,10 +77,23 @@ export function FiltersPanel({
         <label className={styles.field}>
           <span>{t('specialists.specialization')}</span>
           <select
-            value={filters.specialization ?? ''}
-            onChange={(e) => onChange({ specialization: e.target.value || null })}
+            value={
+              filters.specializations.length > 1
+                ? MULTI_VALUE
+                : (filters.specializations[0] ?? '')
+            }
+            onChange={(e) =>
+              onChange({ specializations: e.target.value ? [e.target.value] : [] })
+            }
           >
             <option value="">{t('common.all')}</option>
+            {filters.specializations.length > 1 && (
+              <option value={MULTI_VALUE} disabled>
+                {t('specialists.multipleSpecs', {
+                  count: filters.specializations.length,
+                })}
+              </option>
+            )}
             {specializations.map((s) => (
               <option key={s.key} value={s.key}>
                 {s.label}

@@ -1,0 +1,365 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  scroll-margin-top: calc(var(--header-height) + var(--space-4));
+}
+
+.sectionHead {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.lead {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+/* ---------- Герой ---------- */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding: var(--space-5) var(--space-4);
+  border-radius: var(--radius-hero);
+  background: var(--color-pink);
+}
+
+.heroTitle {
+  font-size: var(--font-size-hero);
+}
+
+.heroLine {
+  display: block;
+}
+
+.heroLead {
+  max-width: 460px;
+  color: var(--color-text-secondary);
+}
+
+.heroCta {
+  width: 100%;
+}
+
+.heroHelp {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.search {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  align-items: center;
+  width: 100%;
+  padding: var(--space-3) var(--space-3) var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-field);
+  background: var(--color-white);
+}
+
+.searchField {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+  padding: 0 var(--space-4);
+}
+
+.searchField:first-child {
+  padding-left: 0;
+}
+
+.searchField + .searchField {
+  border-left: 1px solid var(--color-border);
+}
+
+.searchLabel {
+  color: var(--color-text);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.searchControl {
+  width: 100%;
+  min-height: 28px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-text);
+  font-size: var(--font-size-base);
+  text-overflow: ellipsis;
+}
+
+.searchControl::placeholder {
+  color: var(--color-text);
+  opacity: 1;
+}
+
+select.searchControl {
+  cursor: pointer;
+}
+
+/* ---------- Плитки-ссылки ---------- */
+.grid {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-height: 120px;
+  padding: var(--space-5) var(--space-4);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  color: var(--color-text);
+  text-decoration: none;
+  transition: box-shadow 0.15s;
+}
+
+.tile:hover {
+  box-shadow: var(--shadow-search);
+}
+
+.tilePink {
+  background: var(--color-pink);
+}
+
+.tileTitle {
+  font-size: var(--font-size-card-title);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+}
+
+.tileText {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.number {
+  color: var(--color-primary);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+}
+
+.arrow {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-5);
+}
+
+.accent {
+  color: var(--color-primary);
+}
+
+.startGrid {
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.startGrid .tile {
+  min-height: 170px;
+  padding: var(--space-4);
+}
+
+/* ---------- Шаги ---------- */
+.stepsTitle {
+  text-align: center;
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+}
+
+.stepNumber {
+  flex: none;
+  width: 20px;
+  color: var(--color-primary);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+}
+
+.stepBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+/* ---------- Баннер ---------- */
+.banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  padding: var(--space-7) var(--space-6);
+  border-radius: var(--radius-hero);
+  background: var(--color-green);
+}
+
+.bannerText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.bannerTitle {
+  font-size: var(--font-size-h2);
+}
+
+.bannerLead {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+/* ---------- FAQ ---------- */
+.faqHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.faqGrid {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.faqCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  height: 100%;
+  padding: var(--space-5) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background: var(--color-white);
+}
+
+.faqQuestion {
+  font-size: var(--font-size-card-title);
+}
+
+.faqAnswer {
+  color: var(--color-text-secondary);
+}
+
+/* ---------- Десктоп ---------- */
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fill {
+  height: 100%;
+}
+
+.tileTitleGap {
+  margin-top: var(--space-3);
+}
+
+@media (min-width: 768px) {
+  .page {
+    gap: var(--space-8);
+  }
+
+  .hero {
+    gap: var(--space-5);
+    padding: 56px;
+  }
+
+  .heroTitle {
+    max-width: 14ch;
+    font-size: var(--font-size-hero);
+  }
+
+  .directionsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .tile {
+    min-height: 140px;
+  }
+
+  .stepsSection {
+    display: grid;
+    grid-template-columns: minmax(220px, 1fr) 2fr;
+    gap: var(--space-6);
+    align-items: start;
+  }
+
+  .stepsTitle {
+    text-align: left;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+  }
+
+  .step {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-5);
+    height: 100%;
+    padding: var(--space-5);
+  }
+
+  .faqGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .directionsGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/*
+ * Показ по размеру экрана (как в макете). Единственное место, где используется max-width:
+ * правило должно перекрывать собственный display элемента.
+ */
+@media (max-width: 767px) {
+  .onlyDesktop {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .onlyMobile {
+    display: none;
+  }
+}

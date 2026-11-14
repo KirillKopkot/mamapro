@@ -12,9 +12,7 @@ export default function AdminModerationPage() {
   return (
     <div className={styles.stack}>
       <h1>{t('pages.adminModeration')}</h1>
-      <p className={styles.demo} role="note">
-        {t('moderation.demoBanner')}
-      </p>
+
 
       <section aria-labelledby="mod-profiles">
         <h2 id="mod-profiles">{t('moderation.profilesTitle')}</h2>

@@ -26,8 +26,8 @@ export const SORT_KEYS: readonly SortKey[] = [
 export interface SpecialistFilters {
   query: string
   city: City | null
-  /** Русское название специализации (служит ключом) */
-  specialization: string | null
+  /** Русские названия специализаций (служат ключами); пусто — любая */
+  specializations: string[]
   formats: WorkFormat[]
   priceMin: number | null
   priceMax: number | null
@@ -48,7 +48,7 @@ export interface SpecialistsQueryState {
 export const DEFAULT_FILTERS: SpecialistFilters = {
   query: '',
   city: null,
-  specialization: null,
+  specializations: [],
   formats: [],
   priceMin: null,
   priceMax: null,
@@ -68,7 +68,7 @@ export function countActiveFilters(f: SpecialistFilters): number {
   return [
     f.query.trim() !== '',
     f.city !== null,
-    f.specialization !== null,
+    f.specializations.length > 0,
     f.formats.length > 0,
     f.priceMin !== null,
     f.priceMax !== null,
@@ -101,7 +101,14 @@ export function parseQueryState(params: URLSearchParams): SpecialistsQueryState 
     filters: {
       query: params.get('q') ?? '',
       city,
-      specialization: params.get('spec') || null,
+      specializations: [
+        ...new Set(
+          (params.get('spec') ?? '')
+            .split(',')
+            .map((v) => v.trim())
+            .filter(Boolean),
+        ),
+      ],
       formats: [...new Set(formats)],
       priceMin: parseNumber(params.get('priceMin')),
       priceMax: parseNumber(params.get('priceMax')),
@@ -118,7 +125,7 @@ export function toSearchParams(state: SpecialistsQueryState): URLSearchParams {
   const params = new URLSearchParams()
   if (f.query.trim() !== '') params.set('q', f.query)
   if (f.city) params.set('city', f.city)
-  if (f.specialization) params.set('spec', f.specialization)
+  if (f.specializations.length > 0) params.set('spec', f.specializations.join(','))
   if (f.formats.length > 0) params.set('formats', f.formats.join(','))
   if (f.priceMin !== null) params.set('priceMin', String(f.priceMin))
   if (f.priceMax !== null) params.set('priceMax', String(f.priceMax))
@@ -161,7 +168,8 @@ export function filterSpecialists(
     (s) =>
       matchesQuery(s, f.query) &&
       matchesCity(s, f.city) &&
-      (f.specialization === null || s.specialization.ru === f.specialization) &&
+      (f.specializations.length === 0 ||
+        f.specializations.includes(s.specialization.ru)) &&
       (f.formats.length === 0 || f.formats.some((fmt) => s.formats.includes(fmt))) &&
       (f.priceMin === null || s.price >= f.priceMin) &&
       (f.priceMax === null || s.price <= f.priceMax) &&

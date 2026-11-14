@@ -50,10 +50,22 @@ describe('filterSpecialists', () => {
   it('filters by specialization', () => {
     const res = filterSpecialists(approved, {
       ...DEFAULT_FILTERS,
-      specialization: 'Логопед',
+      specializations: ['Логопед'],
     })
     expect(res.length).toBeGreaterThan(0)
     expect(res.every((s) => s.specialization.ru === 'Логопед')).toBe(true)
+  })
+
+  it('filters by several specializations at once', () => {
+    const res = filterSpecialists(approved, {
+      ...DEFAULT_FILTERS,
+      specializations: ['Логопед', 'Дефектолог'],
+    })
+    expect(res.some((s) => s.specialization.ru === 'Логопед')).toBe(true)
+    expect(res.some((s) => s.specialization.ru === 'Дефектолог')).toBe(true)
+    expect(
+      res.every((s) => ['Логопед', 'Дефектолог'].includes(s.specialization.ru)),
+    ).toBe(true)
   })
 
   it('formats filter matches any selected format', () => {
@@ -154,7 +166,7 @@ describe('URL state', () => {
       filters: {
         query: 'аб',
         city: 'almaty' as const,
-        specialization: 'Логопед',
+        specializations: ['Логопед', 'Дефектолог'],
         formats: ['home' as const, 'online' as const],
         priceMin: 5000,
         priceMax: 12000,
